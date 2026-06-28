@@ -19,7 +19,7 @@ TOPICS = {
 REPOS_PER_TOPIC = 5
 EMAIL_RECIPIENT = "quylmhs173279@fpt.edu.vn"
 EMAIL_SUBJECT_PREFIX = "📬 GitHub Digest"
-GEMINI_MODEL = "gemini-1.5-flash"
+GEMINI_MODEL = "gemini-2.0-flash"
 
 SMTP_HOST = "smtp-relay.brevo.com"
 SMTP_PORT = 587
