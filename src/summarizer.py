@@ -47,6 +47,6 @@ def summarize_repos(repos: list, api_key: str, model: str) -> list:
             print(f"      ⚠️  Gemini error for {repo['name']}: {e}")
             repo["summary_vi"] = repo["description"]
 
-        time.sleep(1)  # Avoid Gemini rate limit
+        time.sleep(5)  # Avoid Gemini rate limit (15 RPM)
 
     return repos
