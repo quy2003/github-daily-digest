@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Digest - {{ date }}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, 'Segoe UI', Arial, sans-serif; background: #0d1117; color: #c9d1d9; }
+    .wrapper { max-width: 640px; margin: 0 auto; padding: 24px 16px; }
+    .header { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border-radius: 16px; padding: 32px; text-align: center; margin-bottom: 24px; border: 1px solid #30363d; }
+    .header h1 { font-size: 28px; font-weight: 800; color: #f0f6fc; letter-spacing: -0.5px; }
+    .header .subtitle { color: #8b949e; margin-top: 8px; font-size: 14px; }
+    .date-badge { display: inline-block; background: #21262d; border: 1px solid #30363d; border-radius: 20px; padding: 4px 16px; font-size: 13px; color: #58a6ff; margin-top: 12px; }
+    .stats-row { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
+    .stat-box { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 12px 20px; text-align: center; flex: 1; }
+    .stat-number { font-size: 24px; font-weight: 800; color: #58a6ff; }
+    .stat-label { font-size: 11px; color: #8b949e; margin-top: 2px; }
+    .section { background: #161b22; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #21262d; }
+    .section-title { font-size: 18px; font-weight: 700; color: #f0f6fc; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #21262d; }
+    .repo-card { background: #0d1117; border-radius: 8px; padding: 16px; margin-bottom: 12px; border: 1px solid #21262d; }
+    .repo-card:last-child { margin-bottom: 0; }
+    .repo-name { font-size: 15px; font-weight: 600; }
+    .repo-name a { color: #58a6ff; text-decoration: none; }
+    .repo-meta { display: flex; gap: 16px; margin-top: 6px; font-size: 12px; color: #8b949e; align-items: center; }
+    .repo-summary { margin-top: 10px; font-size: 14px; color: #c9d1d9; line-height: 1.6; }
+    .stars { color: #e3b341; }
+    .lang-badge { background: #21262d; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #8b949e; }
+    .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #21262d; }
+    .footer p { margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>📬 GitHub Digest</h1>
+      <p class="subtitle">Xu hướng công nghệ mới nhất · AI · MMO · Digital Marketing</p>
+      <span class="date-badge">📅 {{ date }}</span>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-number">{{ total_repos }}</div>
+        <div class="stat-label">Repos hôm nay</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ total_categories }}</div>
+        <div class="stat-label">Lĩnh vực</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">AI</div>
+        <div class="stat-label">Tóm tắt bởi Gemini</div>
+      </div>
+    </div>
+
+    <!-- Repos by Category -->
+    {% for category, repos_in_cat in grouped_repos.items() %}
+    {% if repos_in_cat %}
+    <div class="section">
+      <div class="section-title">{{ category }}</div>
+      {% for repo in repos_in_cat %}
+      <div class="repo-card">
+        <div class="repo-name">
+          <a href="{{ repo.url }}" target="_blank">{{ repo.name }}</a>
+        </div>
+        <div class="repo-meta">
+          <span class="stars">⭐ {{ "{:,}".format(repo.stars) }}</span>
+          {% if repo.language != "N/A" %}
+          <span class="lang-badge">{{ repo.language }}</span>
+          {% endif %}
+        </div>
+        <div class="repo-summary">{{ repo.summary_vi }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>📡 Dữ liệu từ GitHub API · 🤖 Tóm tắt bởi Google Gemini AI</p>
+      <p>GitHub Daily Digest · Gửi tự động lúc 9:00 AM mỗi ngày</p>
+    </div>
+
+  </div>
+</body>
+</html>
