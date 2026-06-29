@@ -13,12 +13,9 @@ def run():
     repos = fetch_trending_repos(config.TOPICS, config.REPOS_PER_TOPIC)
     print(f"   Found {len(repos)} repos")
 
-    print("🤖 Summarizing with Gemini AI...")
-    repos = summarize_repos(repos, config.GEMINI_API_KEY, config.GEMINI_MODEL)
-
-    print("🤖 Generating overall trend summary...")
-    from src.summarizer import generate_trend_summary
-    trend_summary = generate_trend_summary(repos, config.GEMINI_API_KEY, config.GEMINI_MODEL)
+    print("🤖 Summarizing with Gemini AI and generating trend summary...")
+    from src.summarizer import summarize_repos_combined
+    repos, trend_summary = summarize_repos_combined(repos, config.GEMINI_API_KEY, config.GEMINI_MODEL)
 
     print("📧 Building email...")
     html = build_email_html(repos, config.TOPICS, trend_summary)
