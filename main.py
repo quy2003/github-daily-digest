@@ -16,8 +16,12 @@ def run():
     print("🤖 Summarizing with Gemini AI...")
     repos = summarize_repos(repos, config.GEMINI_API_KEY, config.GEMINI_MODEL)
 
+    print("🤖 Generating overall trend summary...")
+    from src.summarizer import generate_trend_summary
+    trend_summary = generate_trend_summary(repos, config.GEMINI_API_KEY, config.GEMINI_MODEL)
+
     print("📧 Building email...")
-    html = build_email_html(repos, config.TOPICS)
+    html = build_email_html(repos, config.TOPICS, trend_summary)
 
     print(f"📨 Sending to {config.EMAIL_RECIPIENT}...")
     send_email(html, config.EMAIL_RECIPIENT, config.SMTP_HOST, config.SMTP_PORT,
