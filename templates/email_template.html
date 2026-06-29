@@ -27,7 +27,9 @@
     .stars { color: #e3b341; }
     .lang-badge { background: #21262d; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #8b949e; }
     .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #21262d; }
-    .footer p { margin-top: 4px; }
+    .overview { background: linear-gradient(135deg, #1c2128 0%, #161b22 100%); border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #30363d; }
+    .overview-title { font-size: 16px; font-weight: 700; color: #f0f6fc; margin-bottom: 12px; }
+    .overview-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
   </style>
 </head>
 <body>
@@ -55,6 +57,14 @@
         <div class="stat-label">Tóm tắt bởi Gemini</div>
       </div>
     </div>
+
+    <!-- Trend Summary -->
+    {% if trend_summary %}
+    <div class="overview">
+      <div class="overview-title">💡 Xu Hướng Nổi Bật Gần Đây</div>
+      <div class="overview-text">{{ trend_summary }}</div>
+    </div>
+    {% endif %}
 
     <!-- Repos by Category -->
     {% for category, repos_in_cat in grouped_repos.items() %}
