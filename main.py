@@ -1,6 +1,6 @@
 """Entry point — orchestrates the full digest pipeline."""
 from src.fetcher import fetch_trending_repos
-from src.summarizer import summarize_repos
+from src.summarizer import summarize_repos_combined
 from src.email_builder import build_email_html
 from src.sender import send_email
 import config
@@ -14,7 +14,6 @@ def run():
     print(f"   Found {len(repos)} repos")
 
     print("🤖 Summarizing with Gemini AI and generating trend summary...")
-    from src.summarizer import summarize_repos_combined
     repos, trend_summary = summarize_repos_combined(repos, config.GEMINI_API_KEY, config.GEMINI_MODEL)
 
     print("📧 Building email...")
