@@ -2,7 +2,7 @@ name: 📬 GitHub Daily Digest
 
 on:
   schedule:
-    - cron: '0 2 * * *'    # 9:00 AM Vietnam time (UTC+7)
+    - cron: '17 2 * * *'    # 9:17 AM Vietnam time (UTC+7) - Odd minute runs faster
   workflow_dispatch:          # Allow manual trigger for testing
 
 jobs:
