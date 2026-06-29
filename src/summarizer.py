@@ -50,3 +50,34 @@ def summarize_repos(repos: list, api_key: str, model: str) -> list:
         time.sleep(5)  # Avoid Gemini rate limit (15 RPM)
 
     return repos
+
+
+def generate_trend_summary(repos: list, api_key: str, model: str) -> str:
+    """
+    Generate a 3-4 sentence overview of the latest GitHub trends based on the gathered repos.
+    """
+    if not repos:
+        return "Hôm nay không có xu hướng nổi bật nào được ghi nhận."
+
+    repo_list_str = ""
+    for r in repos:
+        repo_list_str += f"- {r['name']} ({r['topic_category']}): {r['description']}\n"
+
+    prompt = f"""Dưới đây là danh sách các repository đang thịnh hành (trending) trên GitHub hôm nay trong các lĩnh vực AI, MMO, và Digital Marketing:
+
+{repo_list_str}
+
+Hãy viết một đoạn tóm tắt ngắn (khoảng 3-4 câu) bằng tiếng Việt để giải thích xu hướng công nghệ nổi bật nhất gần đây trên GitHub là gì dựa trên danh sách này.
+Yêu cầu:
+- Viết bằng ngôn ngữ tiếng Việt đơn giản, dễ hiểu cho người không có nền tảng kỹ thuật (non-tech).
+- Không dùng thuật ngữ kỹ thuật quá chuyên sâu mà không giải thích.
+- Đi thẳng vào nội dung chính, không chào hỏi hay có tiêu đề.
+"""
+    try:
+        genai.configure(api_key=api_key)
+        gemini = genai.GenerativeModel(model)
+        response = gemini.generate_content(prompt)
+        return response.text.strip()
+    except Exception as e:
+        print(f"   ⚠️  Gemini trend summary error: {e}")
+        return "Không thể tải tóm tắt xu hướng hôm nay do lỗi kết nối AI."
